@@ -1,4 +1,3 @@
-from .patch_embedding import PatchEmbedding
-from .positional_embedding import PositionalEmbedding
+from .embeddings import PatchEmbedding, PositionalEmbedding
 
 __all__ = ["PatchEmbedding", "PositionalEmbedding"]
