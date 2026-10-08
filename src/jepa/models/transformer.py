@@ -84,7 +84,7 @@ class TransformerBlock(nn.Module):
 
 
 def self_attention(q, k, v):
-    key_dim = q.shape[-1]
+    d_k = q.shape[-1]
     scores = q @ k.T
-    weights = jax.nn.softmax(scores / jnp.sqrt(key_dim), axis=-1)
+    weights = jax.nn.softmax(scores / jnp.sqrt(d_k), axis=-1)
     return weights @ v
