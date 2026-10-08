@@ -15,4 +15,4 @@ def main() -> None:
     )
     params = model.init(random.PRNGKey(0), image)
     tokens = model.apply(params, image)
-    print(f"Output token shape: {tokens.shape}")
+    print(f"Output token shape: {tokens.shape}") # type: ignore
