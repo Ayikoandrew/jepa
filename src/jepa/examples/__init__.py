@@ -1,1 +1,3 @@
-"""Example inputs and runnable demonstrations."""
+from .synthetic import make_synthetic_image
+
+__all__ = ["make_synthetic_image"]
