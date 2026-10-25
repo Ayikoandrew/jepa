@@ -5,22 +5,6 @@ import jax.numpy as jnp
 import flax.linen as nn
 
 
-class SelfAttention(nn.Module):
-    embed_dim: int
-
-    @nn.compact
-    def __call__(self, x) -> Any:
-        q = nn.Dense(self.embed_dim)(x)
-        k = nn.Dense(self.embed_dim)(x)
-        v = nn.Dense(self.embed_dim)(x)
-        scale = jnp.sqrt(self.embed_dim)
-
-        scores = q @ jnp.swapaxes(k, -1, -2)
-        scores = scores / scale
-        attention_weights = nn.softmax(scores, axis=-1)
-        return attention_weights @ v
-
-
 class MultiHeadSelfAttention(nn.Module):
     embed_dim: int
     num_heads: int
@@ -82,6 +66,20 @@ class TransformerBlock(nn.Module):
         x = MLP(embed_dim=self.embed_dim, mlp_ratio=self.mlp_ratio)(x)
         return residual + x
 
+class SelfAttention(nn.Module):
+    embed_dim: int
+
+    @nn.compact
+    def __call__(self, x) -> Any:
+        q = nn.Dense(self.embed_dim)(x)
+        k = nn.Dense(self.embed_dim)(x)
+        v = nn.Dense(self.embed_dim)(x)
+        scale = jnp.sqrt(self.embed_dim)
+
+        scores = q @ jnp.swapaxes(k, -1, -2)
+        scores = scores / scale
+        attention_weights = nn.softmax(scores, axis=-1)
+        return attention_weights @ v
 
 def self_attention(q, k, v):
     d_k = q.shape[-1]
